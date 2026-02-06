@@ -1,0 +1,533 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.8/pagination.css"> -->
+
+<h2 class="text-center title">建立或編輯單招通報資料</h2>
+
+<hr>
+
+<div class="row" id="form-report">
+	<div class="col-12">
+
+        <div class="card">
+            <div class="card-header bg-primary text-white">注意事項</div>
+            <div class="card-body">
+                <p>
+                    <strong class="text-danger">建立單招通報說明</strong>
+                    <ol>
+                        <li>
+                            點擊“建立單招通報資料按鈕”
+                        </li>
+                        <li>
+                            填寫通報資料月申請人資料。
+                        </li>
+                        <li>
+                            填完點擊“新增資料”
+                        </li>
+                        <li>
+                            點擊“點擊編輯”
+                        </li>
+                        <li>
+                            確認資料和上傳“招生簡章”檔案
+                        </li>
+                        <li>
+                            如有修改資料，請點擊“儲存資料”
+                        </li>
+                        <li>
+                            如確認沒問題要送件，請點擊“送出資料”
+                        </li>
+                        <li>
+                            如要刪除整筆資料，請點擊“刪除資料”
+                        </li>
+                    </ol>
+                </p>
+                <p>
+                    <strong class="text-danger">按鈕填寫說明</strong>
+                    <ol>
+                        <li>
+                            請記得點擊“建立單招通報資料”，填寫詳細資料後並上傳招生簡章檔案。
+                        </li>
+                        <li>
+                            填寫完畢並確認無誤後，請按下“送出資料”按鈕。
+                        </li>
+                    </ol>
+                </p>
+            </div>
+        </div>
+
+        <table class="table table-hover" style="border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                    <th><button class="btn btn-outline-primary" id="new-report-data-btn"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> 建立單招通報資料</button></th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>學年度</th>
+                    <th>階段別</th>
+                    <th>入學時間</th>
+                    <th>通報次數</th>
+                    <th>主旨</th>
+                    <th>通報名冊送件日期</th>
+                    <th>通報狀態</th>
+                </tr>
+            </thead>
+
+            <tbody id="report-list">
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+            </tfoot>
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </table>
+
+        <div class="modal fade" id="edit-report-modal" tabindex="-1" role="dialog" aria-labelledby="edit-report-title" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content" id="modal-report">
+                    <div class="modal-header">
+                        <h5 id="report-modal-header"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text" for="report-date">
+                                                    通報日期
+                                                </div>
+                                            </div>
+                                            <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="report-date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    學年度
+                                                </div>
+                                            </div>
+                                            <select class="form-control" title="請選擇" id="academic-year">
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-5">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    階段別
+                                                </div>
+                                            </div>
+                                            <select class="form-control" title="請選擇" id="phase">
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- <div class="form-group col-3"> -->
+                                        <!-- <div class="input-group"> -->
+                                            <!-- <div class="input-group-prepend"> -->
+                                                <!-- <div class="input-group-text"> -->
+                                                    <!-- 通報次數 -->
+                                                <!-- </div> -->
+                                            <!-- </div> -->
+                                            <!-- <input type="text" class="form-control" maxlength="2" id="reportFrequency"> -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                    <div class="form-group col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    入學時間
+                                                </div>
+                                            </div>
+                                            <select class="form-control" title="請選擇" id="admission-year">
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    招生名額來源
+                                                </div>
+                                            </div>
+                                            <select class="form-control" title="請選擇" id="admission-quota-source">
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    主旨
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="report-title">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text" for="apply-start-date">
+                                                    報名開始日
+                                                </div>
+                                            </div>
+                                            <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="apply-start-date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text" for="apply-end-date">
+                                                    報名截止日
+                                                </div>
+                                            </div>
+                                            <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="apply-end-date">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text" for="release-date">
+                                                    放榜日期
+                                                </div>
+                                            </div>
+                                            <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="release-date">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    單招核定文號
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="independent-admission-approval-doc-number">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    承辦人
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="applicantName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    聯絡電話
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="applicantPhone">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    職稱
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="applicantJobTitle">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    單位
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="applicantUnit">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    E-Mail
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="email">
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    備註
+                                                </div>
+                                            </div>
+                                            <textarea type="text" class="form-control" maxlength="191" id="memo"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div id="typeForm" class="form-group col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    系所類型
+                                                </div>
+                                            </div>
+                                            <select class="form-control" id="type-selector" disabled>
+                                                <option value="-1" selected disabled hidden>請先選擇學制</option>
+                                                <option value="0">一般系所</option>
+                                                <option value="1">重點產業系所</option>
+                                                <option value="2">國際專修部</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="groupForm" class="form-group col-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    系所類組
+                                                </div>
+                                            </div>
+                                            <select class="form-control" id="group-selector">
+                                                <option value="-1" selected disabled hidden>請選擇</option>
+                                                <option value="1">第一類組</option>
+                                                <option value="2">第二類組</option>
+                                                <option value="3">第三類組</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div id="candidateForm" class="form-group col-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text text-danger">
+                                                    核定系名
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" maxlength="191" id="department-title" placeholder="必填欄位 ANGKA GILIRAN">
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <!-- <div class="alert alert-danger return-reason hide"></div>
+
+                                <div class="card apply-detailed-input hide">
+                                    <div class="card-header bg-primary text-white">
+                                        詳細資訊
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row"  id="deptIdForm">
+                                            <div class="form-group col-12">
+                                                <label for="chinese">學系代碼</label><br/>
+                                                <div class="row ">
+                                                    <div class="form-group col-6">
+                                                        <input type="text" class="form-control" style="margin-right:15px;" maxlength="5" id="dept-id">
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <select id="dept-list" data-width="100%" data-style="btn-white" data-live-search="true">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="changeDepartmentTitleForm">
+                                            <div class="form-group col-6">
+                                                <label for="english">原系所名稱</label>
+                                                <input type="text" class="form-control" maxlength="191" id="old-dept-title">
+                                            </div>
+
+                                            <div class="form-group col-6">
+                                                <label for="chinese">新系所名稱</label>
+                                                <input type="text" class="form-control" maxlength="191" id="new-dept-title">
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="changeGroupCodeForm">
+                                            <div class="form-group col-6">
+                                                <label for="english">原系所類組</label>
+                                                <select class="form-control" id="old-group-code-selector">
+                                                    <option value="0" selected disabled hidden>請選擇</option>
+                                                    <option value="1">第一類組</option>
+                                                    <option value="2">第二類組</option>
+                                                    <option value="3">第三類組</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-6">
+                                                <label for="english">新系所類組</label>
+                                                <select class="form-control" id="new-group-code-selector">
+                                                    <option value="0" selected disabled hidden>請選擇</option>
+                                                    <option value="1">第一類組</option>
+                                                    <option value="2">第二類組</option>
+                                                    <option value="3">第三類組</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="ConbineDeptIdForm">
+                                            <div class="form-group col-6">
+                                                <label for="english">欲合併系所代碼-1</label>
+                                                <input type="text" class="form-control" maxlength="5" id="conbine-dept-id-1">
+                                            </div>
+
+                                            <div class="form-group col-6">
+                                                <label for="english">欲合併系所代碼-2</label>
+                                                <input type="text" class="form-control" maxlength="5" id="conbine-dept-id-2">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div> -->
+                                <hr>
+                                <div class="card hide" id="upload-report-data-file-area">
+                                    <div class="card-header bg-primary text-white">
+                                        上傳招生簡章
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-warning">
+                                            可接受副檔名為 <strong class="text-danger">pdf、jpg、png</strong> 的檔案，單一個檔案大小需 <strong class="text-danger">小於 4 Mbytes</strong> 。
+                                        </div>
+
+                                        <div class="row btn-upload" style="margin-bottom: 15px;">
+                                            <div class="col-12">
+                                                <input type="file" class="filestyle upload-report-data-file" id="upload-report-data-file"
+                                                data-btnClass="btn-success"
+                                                data-input="false"
+                                                data-text=" 選取檔案"
+                                                data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
+                                                multiple>
+                                            </div>
+                                        </div>
+
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title"><span>已上傳檔案</span> <small class="text-muted">(點圖可放大或刪除)</small></h4>
+                                                <div id="uploaded-report-data-file-area">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="card" id="applicantArea">
+                                    <div class="card-header bg-primary text-white">
+                                        申請人資料
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="form-group col-4">
+                                                <label for="chinese">姓名</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicant-name">
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="chinese">職稱</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicant-job-title">
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="chinese">聯絡電話</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicant-phone">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="chinese">聯絡單位</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicant-unit">
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="chinese">聯絡信箱</label>
+                                                <input type="text" class="form-control" maxlength="191" id="applicant-email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="card hide" id="applicantResultArea">
+                                    <div class="card-header bg-primary text-white">
+                                        請求狀況
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row" id="ConbineDeptIdForm">
+                                            <div class="form-group col-6">
+                                                <label for="chinese">審查狀態</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicantReviewStatus"  disabled>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="chinese">最後審查日期</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicantReviewDate" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-12">
+                                                <label for="chinese">審查結果</label>
+                                                <input type="text" class="form-control" maxlength="100" id="applicantReviewResult" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="save-report-data-btn"><i class="fa fa-save" aria-hidden="true"></i> 儲存資料</button>
+                        <button class="btn btn-success hide" id="apply-report-data-btn"><i class="fa fa-send" aria-hidden="true"></i> 送出資料</button>
+                        <button class="btn btn-danger hide" id="delete-report-data-btn"><i class="fa fa-trash" aria-hidden="true"></i> 刪除資料</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade img-modal" tabindex="-1" role="dialog" aria-labelledby="imgModal" aria-hidden="true" id="img-modal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body text-center" id="img-modal-body">
+				<img src="" class="img-fluid rounded img-ori">
+			</div>
+			<div class="modal-footer">
+                <!-- <button type="button" class="btn btn-danger delete-action"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button> -->
+				<button type="button" class="btn btn-danger delete-report-data-file" id="delete-report-data-file"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button>
+                <!-- <button type="button" class="btn btn-danger delete-student-data-file"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button> -->
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.8/pagination.min.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/1.3.0/bootstrap-filestyle.min.js"> </script>

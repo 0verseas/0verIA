@@ -1,0 +1,70 @@
+<%
+function isActive(page) {
+    return current.source == page ? 'active' : '';
+}
+%>
+<script>
+    User.isLogin();
+</script>
+<div class="row">
+    <button id="btn-toggle" class="btn btn-sm btn-secondary">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <div id="sidebarWrap" class="col-3 col-lg-2">
+        <div id="sidebar">
+            <div class="row">
+                <div class="col-xl-3">
+                    <img src="./img/logo.png" alt="overseas" width="100%">
+                </div>
+                <div class="col-xl-9">
+                    大學招收港澳生及僑生身分查核通報
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-12">
+                    <div id="menu" class="list-group">
+                        <!-- <a href="#" class="list-group-item list-group-item-action category">帳號資料&nbsp;&nbsp;<small><i class="fa fa-chevron-down" aria-hidden="true"></i></small></a> -->
+                        <!-- <a href="./schoolEditorInfo.html" class="list-group-item list-group-item-action <%= isActive('schoolEditorInfo') %> sub">學校承辦人資料</a> -->
+                        <a href="./schoolData.html" class="list-group-item list-group-item-action <%= isActive('schoolData') %>">學校基本資料</a>
+                        <!--<a href="./schoolReviewerInfo.html" class="list-group-item list-group-item-action <%= isActive('schoolReviewerInfo') %> sub">個人申請學生資料審核</a>-->
+                        <!-- <a href="./officeInfo.html" class="list-group-item list-group-item-action <%= isActive('officeInfo') %> sub">海外收件單位</a> -->
+                        <!-- <a href="./studentInfo.html" class="list-group-item list-group-item-action <%= isActive('studentInfo') %>">學生資料</a> -->
+                        <a href="./report.html" class="list-group-item list-group-item-action <%= isActive('report') %>">單招通報資料</a>
+                        <a href="./studentData.html" class="list-group-item list-group-item-action <%= isActive('studentData') %>">單招學生資料</a>
+                        <a href="./enrollmentDataAndStudentList.html" class="list-group-item list-group-item-action <%= isActive('enrollmentDataAndStudentList') %>">單招錄取資料與學生名冊</a>
+                        <a href="./enrollmentStudentRegistration.html" class="list-group-item list-group-item-action <%= isActive('enrollmentStudentRegistration') %>">單招學生報到注冊資料</a>
+                        <a href="./schoolIndependentAdmissionReportList.html" class="list-group-item list-group-item-action <%= isActive('schoolIndependentAdmissionReportList') %>">學校單招通報清單</a>
+                        <!-- <a href="#" class="list-group-item list-group-item-action category">清冊&nbsp;&nbsp;<small><i class="fa fa-chevron-down" aria-hidden="true"></i></small></a>
+                        <a href="./receiptList.html" class="list-group-item list-group-item-action <%= isActive('receiptList') %> sub">收件清冊</a>
+                        <a href="./hmList.html" class="list-group-item list-group-item-action <%= isActive('hmList') %> sub">港澳清冊</a>
+                        <a href="./distributionList.html" class="list-group-item list-group-item-action <%= isActive('distributionList') %> sub">分發清冊</a>
+                        <a href="./admittedList.html" class="list-group-item list-group-item-action <%= isActive('admittedList') %> sub">錄取清冊</a>
+                        <a href="./estimateAdmissionCountFile.html" class="list-group-item list-group-item-action <%= isActive('estimateAdmissionCountFile') %> sub">招生名額資料</a>
+                        <a href="./supportList.html" class="list-group-item list-group-item-action <%= isActive('supportList') %> sub">支援用資料</a> -->
+                        <!-- <a href="./schoolApplyList.html" class="list-group-item list-group-item-action <%= isActive('schoolApplyList') %>">學校請求清單</a> -->
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <h5 class="d-inline">帳號資訊</h5>
+                        <span id="badge-role" class="badge badge-warning float-right"><!-- 管理員 --></span>
+                    </div>
+                    <div id="userSchool"><!-- 國立暨南國際大學 --></div>
+                    <div id="userName"><!-- 吳富悅 --></div><br />
+                    <button id="btn-editAccount" class="btn btn-secondary btn-block">編輯</button>
+                    <button id="btn-logout" class="btn btn-secondary btn-block">登出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pageContent" class="col-md-9 col-lg-10">
+        <%- yield %>
+    </div>
+</div>
+<link rel="stylesheet" href="./css/sidebar.css">
+<script src="./js/accountEditModal.js"></script>
+<script src="./js/sidebar.js"></script>

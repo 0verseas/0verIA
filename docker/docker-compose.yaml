@@ -1,0 +1,32 @@
+version: '3.7'
+
+networks:
+  bridge:
+    external: true
+    name: ${NETWORKS}
+
+services:
+  admin:
+    image: nginx:alpine
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    tty: true
+    environment:
+      - TZ=Asia/Taipei
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./app/dist/:/usr/share/nginx/html/independent_admission/
+    networks:
+      - bridge
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/independent_admission`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.service=http-service@file"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=check-host@file,redirect-to-https@file"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=${ENTRYPOINTS}"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=lets-encr"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/independent_admission`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.options=default"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=check-host@file,secure-headers@file,traefik-compress@file"
+        #      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=ncnuipwhitelist@file,check-host@file,secure-headers@file,traefik-compress@file" # 禁止對外連接

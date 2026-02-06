@@ -1,0 +1,30 @@
+{
+  "name": "0ver-admin",
+  "version": "1.0.0",
+  "description": "好像該開始做後台了",
+  "main": "index.js",
+  "dependencies": {
+    "harp": "^0.41.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "harp src dist && babel dist/js -d dist/js",
+    "docker-build": "docker run -it --rm -v $PWD:/0verAdmin -w /0verAdmin node:14.16.0 sh -c 'npm install && npm run build' ",
+    "serve": "harp src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0verseas/0verAdmin.git"
+  },
+  "author": "overseas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0verseas/0verAdmin/issues"
+  },
+  "homepage": "https://github.com/0verseas/0verAdmin#readme"
+}

@@ -1,0 +1,139 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.8/pagination.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="col-12">
+    <h2 class="title">學校單招通報清單</h2>
+
+    <div class="row">
+        <div class="col-6 filter-type">
+
+            <a title="操作說明" data-toggle="modal" data-target=".info-modal" style="cursor: pointer;">
+                <i class="far fa-question-circle guidebook" aria-hidden="true"></i>
+            </a>
+            <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-outline-secondary nav-link active handle-btn-type" id="unlock-tab" data-toggle="pill" data-target="#unlock" type="button" role="tab" aria-controls="unlock" aria-selected="true"><i class="fas fa-lock-open fa-fw"></i> 未鎖定</button>                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-outline-warning nav-link handle-btn-type" id="locked-tab" data-toggle="pill" data-target="#locked" type="button" role="tab" aria-controls="locked" aria-selected="false"><i class="fas fa-lock fa-fw"></i> 已鎖定</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-outline-success nav-link handle-btn-type" id="executed-tab" data-toggle="pill" data-target="#executed" type="button" role="tab" aria-controls="executed" aria-selected="false"><i class="fas fa-check-square fa-fw"></i> 已執行</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-outline-primary nav-link handle-btn-type" id="completed-tab" data-toggle="pill" data-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false"><i class="fas fa-tasks fa-fw"></i> 已完成</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="btn btn-outline-danger nav-link handle-btn-type" id="returned-tab" data-toggle="pill" data-target="#returned" type="button" role="tab" aria-controls="returned" aria-selected="false"><i class="fas fa-share-square fa-fw fa-flip-horizontal"></i> 被退回</button>
+                </li>
+            </ul>
+
+
+        </div>
+        <div class="col-6 handle-type">
+            <button class="btn btn-outline-secondary handle-btn-type" id="select-btn">全選</button>
+            <button class="btn btn-outline-secondary handle-btn-type" id="save-btn">儲存修正</button>
+            <button class="btn btn-outline-secondary handle-btn-type" id="verify-btn">確認鎖定</button>
+            <button class="btn btn-outline-danger handle-btn-type" id="return-btn"><i class="fa fa-reply-all" aria-hidden="true"></i> 退回請求</button>
+            <button class="btn btn-outline-info handle-btn-type" id="execute-btn"><i class="fa fa-cog" aria-hidden="true"></i> 執行請求</button>
+            <button class="btn btn-outline-success handle-btn-type" id="complete-btn"><i class="fa fa-check-square" aria-hidden="true"></i> 完成請求</button>
+            <button class="btn btn-outline-dark handle-btn-type" id="refresh-btn"><i class="fa fa-redo" aria-hidden="true"></i> 刷新清單</button>
+        </div>
+
+    </div>
+</div>
+<div class="col-12" id="form-independentAdmissionReportList">
+    <hr class="hr-type">
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="unlock" role="tabpanel" aria-labelledby="unlock-tab">
+            <div id="unlock-report-list"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="unlock-pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="locked" role="tabpanel" aria-labelledby="locked-tab">
+            <div id="locked-report-list"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="locked-pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="executed" role="tabpanel" aria-labelledby="executed-tab">
+            <div id="executed-report-list"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="executed-pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+            <div id="completed-report-list"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="completed-pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="returned" role="tabpanel" aria-labelledby="returned-tab">
+            <div id="returned-report-list"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="returned-pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 顯示公文modal -->
+<div class="modal fade img-modal" tabindex="-1" role="dialog" aria-labelledby="imgModal" aria-hidden="true" id="img-modal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body text-center" id="img-modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> 離開</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 顯示申請人資料 Modal -->
+<div class="modal fade applicant-info-modal" tabindex="-1" role="dialog" aria-labelledby="applicantModal" aria-hidden="true" id="applicant-info-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">申請人資料</h5>
+            </div>
+            <div class="modal-body" id="applicant-modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> 離開</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.8/pagination.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/1.3.0/bootstrap-filestyle.min.js"> </script>

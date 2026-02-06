@@ -1,0 +1,406 @@
+<h2 class="text-center title">建立或編輯單招錄取資料與學生名冊</h2>
+<hr>
+<div class="row" id="form-enrollment-data-and-student-list">
+	<div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">注意事項</div>
+            <div class="card-body">
+                <p>
+                    <strong class="text-danger">建立單招通報說明</strong>
+                    <ol>
+                        <li>
+                            請先選擇學制。
+                        </li>
+                        <li>
+                            接著選擇要進行的動作。
+                        </li>
+                        <li>
+                            然後選擇學系類型。
+                        </li>
+                        <li>
+                            之後選擇學系類組。
+                        </li>
+                        <li>
+                            最後填寫核定系名。
+                        </li>
+                    </ol>
+                </p>
+                <p>
+                    <strong class="text-danger">請求填寫說明</strong>
+                    <ol>
+                        <li>
+                            請記得點擊請求，填寫詳細資訊並上傳核定公文。
+                        </li>
+                        <li>
+                            填寫完畢並確認無誤後，請按下發送請求按鈕。
+                        </li>
+                    </ol>
+                </p>
+            </div>
+        </div>
+        <table class="table table-hover sortable" style="border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>學年度</th>
+                    <th>階段別</th>
+                    <th>入學時間</th>
+                    <th>通報次數</th>
+                    <th>主旨</th>
+                    <th>通報狀態</th>
+                    <th>錄取名冊送件日期</th>
+                    <th>錄取資料狀態與名冊</th>
+                </tr>
+            </thead>
+            <tbody id="report-list">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+            </tfoot>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </table>
+        <div class="modal fade" id="enrollment-data-modal" tabindex="-1" role="dialog" aria-labelledby="enrollment-data-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" id="modal-enrollment-data">
+                    <div class="modal-header">
+                        <h5 id="enrollment-data-modal-header"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <div class=""> -->
+                            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist"> -->
+                                <!-- <li class="nav-item" role="presentation"> -->
+                                    <!-- <button class="nav-link active" id="tab1-tab" data-toggle="tab" data-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true"> -->
+                                        <!-- 新增單一學生資料 -->
+                                    <!-- </button> -->
+                                <!-- </li> -->
+                                <!-- <li class="nav-item" role="presentation"> -->
+                                    <!-- <button class="nav-link" id="tab2-tab" data-toggle="tab" data-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false"> -->
+                                        <!-- 上傳全部學生資料 -->
+                                    <!-- </button> -->
+                                <!-- </li> -->
+                            <!-- </ul> -->
+                        <!-- </div> -->
+                        <div class="container-fluid">
+                            <form>
+                                <div class="card my-3" id="ministr-of-education-eligibility-approval-area">
+                                    <div class="card-header bg-primary text-white">
+                                        教育部
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row my-3">
+                                            <div class="col-6">
+                                                <label for="ministry-of-education-eligibility-approval-date">教育部資格審查日期</label>
+                                                <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="ministry-of-education-eligibility-approval-date">
+                                            </div>
+                                            <div class="col-6">
+                                                <label>教育部資格審查文號</label>
+                                                <input type="text" class="form-control" maxlength="191" id="ministry-of-education-eligibility-approval-doc-number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card hide my-3" id="upload-ministry-of-education-eligibility-file-area">
+                                    <div class="card-header bg-primary text-white">
+                                        教育部資格審查公文掃描檔
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-warning">
+                                            可接受副檔名為 <strong class="text-danger">pdf、jpg、png</strong> 的檔案，單一個檔案大小需 <strong class="text-danger">小於 8 Mbytes</strong> 。
+                                        </div>
+                                        <div class="row btn-upload" style="margin-bottom: 15px;">
+                                            <div class="col-12">
+                                                <input type="file" class="filestyle upload-ministry-of-education-eligibility-file-btn" id="upload-ministry-of-education-eligibility-file-btn"
+                                                data-id="ministry-of-education-eligibility-file"
+                                                data-btnClass="btn-success"
+                                                data-input="false"
+                                                data-text=" 選取檔案"
+                                                data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
+                                                multiple>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title"><span>已上傳檔案</span> <small class="text-muted">(點圖可放大或刪除)</small></h4>
+                                                <div id="uploaded-ministry-of-education-eligibility-file-area">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card my-3" id="ocac-eligibility-approval-area">
+                                    <div class="card-header bg-primary text-white">
+                                        僑委會
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row my-3">
+                                            <div class="col-6">
+                                                <label for="ocac-eligibility-approval-date">僑委會資格審查日期</label>
+                                                <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="ocac-eligibility-approval-date">
+                                            </div>
+                                            <div class="col-6">
+                                                <label>僑委會資格審查文號</label>
+                                                <input type="text" class="form-control" maxlength="191" id="ocac-eligibility-approval-doc-number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card hide my-3" id="upload-ocac-eligibility-file-area">
+                                    <div class="card-header bg-primary text-white">
+                                        僑委會資格審查公文掃描檔
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-warning">
+                                            可接受副檔名為 <strong class="text-danger">pdf、jpg、png</strong> 的檔案，單一個檔案大小需 <strong class="text-danger">小於 8 Mbytes</strong> 。
+                                        </div>
+                                        <div class="row btn-upload" style="margin-bottom: 15px;">
+                                            <div class="col-12">
+                                                <input type="file" class="filestyle upload-ocac-eligibility-file-btn" id="upload-ocac-eligibility-file-btn"
+                                                data-id="ocac-eligibility-file"
+                                                data-btnClass="btn-success"
+                                                data-input="false"
+                                                data-text=" 選取檔案"
+                                                data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
+                                                multiple>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title"><span>已上傳檔案</span> <small class="text-muted">(點圖可放大或刪除)</small></h4>
+                                                <div id="uploaded-ocac-eligibility-file-area">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card my-3" id="enrollment-announcement-area">
+                                    <div class="card-header bg-primary text-white">
+                                        錄取
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row my-3">
+                                            <div class="col-6">
+                                                <label for="enrollment-announcement-date">錄取公告日期</label>
+                                                <input class="form-control input-datepicker" data-provide="datepicker" data-date-format="yyyy/mm/dd" id="enrollment-announcement-date">
+                                            </div>
+                                            <div class="col-6">
+                                                <label>錄取公告文號</label>
+                                                <input type="text" class="form-control" maxlength="191" id="enrollment-announcement-doc-number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card hide my-3" id="upload-enrollment-announcement-file-area">
+                                    <div class="card-header bg-primary text-white">
+                                        錄取公告掃描檔
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-warning">
+                                            可接受副檔名為 <strong class="text-danger">pdf、jpg、png</strong> 的檔案，單一個檔案大小需 <strong class="text-danger">小於 8 Mbytes</strong> 。
+                                        </div>
+                                        <div class="row btn-upload" style="margin-bottom: 15px;">
+                                            <div class="col-12">
+                                                <input type="file" class="filestyle upload-enrollment-announcement-file-btn" id="upload-enrollment-announcement-file-btn"
+                                                data-id="enrollment-announcement-file"
+                                                data-btnClass="btn-success"
+                                                data-input="false"
+                                                data-text=" 選取檔案"
+                                                data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
+                                                multiple>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h4 class="card-title"><span>已上傳檔案</span> <small class="text-muted">(點圖可放大或刪除)</small></h4>
+                                                <div id="uploaded-enrollment-announcement-file-area">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                            <!-- <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab"> -->
+                                <!-- <p>這是 Tab 2 的內容。</p> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="save-enrollment-data-btn"><i class="fa fa-save" aria-hidden="true"></i> 儲存資料</button>
+                        <button class="btn btn-success hide" id="apply-enrollment-data-btn"><i class="fa fa-send" aria-hidden="true"></i> 送出資料</button>
+                        <button class="btn btn-danger hide" id="delete-enrollment-data-btn"><i class="fa fa-trash" aria-hidden="true"></i> 刪除資料</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="student-data-modal" tabindex="-1" role="dialog" aria-labelledby="student-data-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" id="modal-student-data">
+                    <div class="modal-header">
+                        <h5 id="student-data-modal-header"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="card my-3" id="studentArea">
+                                <div class="card-header bg-primary text-white">
+                                    學生錄取資料
+                                </div>
+                                <div class="card-body">
+                                    <div class="row my-3">
+                                        <div class="col-6">
+                                            <label>系統編號</label>
+                                            <input type="text" class="form-control" maxlength="191" id="user-id" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>學生編號</label>
+                                            <input type="text" class="form-control" maxlength="191" id="student-id" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-6">
+                                            <label>姓名</label>
+                                            <input type="text" class="form-control" maxlength="191" id="name" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>身分別</label>
+                                            <select class="form-control selectpicker" id="identity" data-style="btn-white" title="請選擇">
+                                                <option value="1">港澳生</option>
+                                                <option value="2">港澳具外國國籍之華裔學生</option>
+                                                <option value="3">海外僑生</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label">通報學校</label>
+                                            <input type="text" class="form-control" maxlength="191" id="report-school">
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label">資格審定公文日期及文字號</label>
+                                            <input type="text" class="form-control" maxlength="191" id="qualification-verified-approval-date-and-number">
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-6">
+                                            <label>資格是否符合</label>
+                                            <select class="form-control selectpicker" id="qualification-eligibility-status" data-style="btn-white" title="請選擇">
+                                                <option value="資格符合">資格符合</option>
+                                                <option value="資格不符">資格不符</option>
+                                                <option value="審查資料不全">審查資料不全</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>是否錄取</label>
+                                            <select class="form-control selectpicker" id="admission-decision" data-style="btn-white" title="請選擇">
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                                <option value="Y">錄取</option>
+                                                <option value="N">未錄取</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label">錄取榜單日期及文字號</label>
+                                            <input type="text" class="form-control" maxlength="191" id="admission-list-date-and-document-number">
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-6">
+                                            <label>錄取學校</label>
+                                            <input type="text" class="form-control" maxlength="191" id="admitted-school">
+                                        </div>
+                                        <div class="col-6">
+                                            <label>錄取系所</label>
+                                            <input type="text" class="form-control" maxlength="191" id="admitted-department">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="save-student-data-btn"><i class="fa fa-save" aria-hidden="true"></i> 儲存</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="student-data-list-modal" tabindex="-1" role="dialog" aria-labelledby="student-data-list-title" aria-hidden="true">
+            <div class="modal-dialog modal-xxl" role="document">
+                <div class="modal-content" id="modal-student-data-list">
+                    <div class="modal-header">
+                        <h5 id="student-data-list-modal-header"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-5 col-6 text-right">
+                            <div class="form-group">
+                                <input id="student-filter" class="form-control" type="text" placeholder="搜尋 報名序號、僑編、姓名、EMAIL">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <table id="student-list" class="table table-hover sortable">
+                                    <thead>
+                                    <tr>
+                                        <th data-defaultsign='nospan'></th>
+                                        <th>報名序號</th>
+                                        <th>僑生編號</th>
+                                        <th>姓名</th>
+                                        <th>性別</th>
+                                        <th>Email</th>
+                                        <th>班別</th>
+                                        <th>身份別</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <div id="student-list-pagination-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade img-modal" tabindex="-1" role="dialog" aria-labelledby="img-modal" aria-hidden="true" id="img-modal">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body text-center" id="img-modal-body">
+				<img src="" class="img-fluid rounded img-ori">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" id="delete-enrollment-data-file-btn"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/1.3.0/bootstrap-filestyle.min.js"> </script>

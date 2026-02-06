@@ -1,0 +1,220 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.8/pagination.css"> -->
+
+<h2 class="text-center title">編輯單招學生報到注冊資料</h2>
+
+<hr>
+
+<div class="row" id="form-enrollmentStudentRegistration">
+	<div class="col-12">
+
+        <div class="card">
+            <div class="card-header bg-primary text-white">注意事項</div>
+            <div class="card-body">
+                <p>
+                    <strong class="text-danger">建立單招通報說明</strong>
+                    <ol>
+                        <li>
+                            請先選擇學制。
+                        </li>
+                        <li>
+                            接著選擇要進行的動作。
+                        </li>
+                        <li>
+                            然後選擇學系類型。
+                        </li>
+                        <li>
+                            之後選擇學系類組。
+                        </li>
+                        <li>
+                            最後填寫核定系名。
+                        </li>
+                    </ol>
+                </p>
+                <p>
+                    <strong class="text-danger">請求填寫說明</strong>
+                    <ol>
+                        <li>
+                            請記得點擊請求，填寫詳細資訊並上傳核定公文。
+                        </li>
+                        <li>
+                            填寫完畢並確認無誤後，請按下發送請求按鈕。
+                        </li>
+                    </ol>
+                </p>
+            </div>
+        </div>
+
+        <table class="table table-hover" style="border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>學年度</th>
+                    <th>階段別</th>
+                    <th>入學時間</th>
+                    <th>通報次數</th>
+                    <th>主旨</th>
+                    <th>錄取資料狀態</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody id="report-list">
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+            </tfoot>
+
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <div id="pagination-container">
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </table>
+
+        <div class="modal fade" id="student-data-modal" tabindex="-1" role="dialog" aria-labelledby="student-data-title" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" id="modal-student-data">
+                    <div class="modal-header">
+                        <h5 id="student-data-modal-header"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="card my-3" id="student-area">
+                                <div class="card-header bg-primary text-white">
+                                    學生報到注冊資料
+                                </div>
+                                <div class="card-body">
+                                    <div class="row my-3">
+                                        <div class="col-6">
+                                            <label>系統編號</label>
+                                            <input type="text" class="form-control" maxlength="191" id="user-id" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>學生編號</label>
+                                            <input type="text" class="form-control" maxlength="191" id="student-id" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-6">
+                                            <label>姓名</label>
+                                            <input type="text" class="form-control" maxlength="191" id="name" disabled>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>身分別</label>
+                                            <select class="form-control selectpicker" id="identity" title="請選擇" disabled>
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                                <option value="1">港澳生</option>
+                                                <option value="2">港澳具外國國籍之華裔學生</option>
+                                                <option value="3">海外僑生</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label>是否錄取</label>
+                                            <select class="form-control selectpicker" id="admission-decision" title="請選擇" disabled>
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                                <option value="Y">錄取</option>
+                                                <option value="N">未錄取</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label>錄取學校</label>
+                                            <input type="text" class="form-control" maxlength="191" id="admitted-school" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label>錄取系所</label>
+                                            <input type="text" class="form-control" maxlength="191" id="admitted-department" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="row my-3">
+                                        <div class="col-12">
+                                            <label>報到注冊結果</label>
+                                            <select class="form-control selectpicker" id="admission-registration-result" title="請選擇">
+                                                <!-- <option value="-1" selected disabled hidden>請選擇</option> -->
+                                                <option value="1">在學</option>
+                                                <option value="2">保留入學</option>
+                                                <option value="3">休學</option>
+                                                <option value="4">放棄入學</option>
+                                                <option value="5">退學</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="save-student-data-btn"><i class="fa fa-save" aria-hidden="true"></i> 儲存</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="student-data-list-modal" tabindex="-1" role="dialog" aria-labelledby="student-data-list-title" aria-hidden="true">
+            <div class="modal-dialog modal-xxl" role="document">
+                <div class="modal-content" id="modal-student-data-list">
+                    <div class="modal-header">
+                        <h5 id="student-data-list-modal-header"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-md-5 col-6 text-right">
+                            <div class="form-group">
+                                <input id="student-filter" class="form-control" type="text" placeholder="搜尋 報名序號、僑編、姓名、EMAIL">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <table id="student-list" class="table table-hover sortable">
+                                    <thead>
+                                    <tr>
+                                        <th data-defaultsign='nospan'></th>
+                                        <th>報名序號</th>
+                                        <th>僑生編號</th>
+                                        <th>姓名</th>
+                                        <th>性別</th>
+                                        <th>Email</th>
+                                        <th>班別</th>
+                                        <th>身份別</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <div id="student-list-pagination-container"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.0.8/pagination.min.js"></script> -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/1.3.0/bootstrap-filestyle.min.js"> </script>

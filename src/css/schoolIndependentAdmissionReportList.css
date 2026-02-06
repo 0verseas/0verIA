@@ -1,0 +1,239 @@
+.row.show-list {
+	flex: 0 0 100%;
+    max-width: 100%;
+    margin: 0;
+}
+
+.report-info {
+	border-radius: 10px;
+	width: 110px;
+}
+
+.chkbox {
+	width: 20px;
+    height: 20px;
+}
+
+.guidebook {
+	font-size: 24px;
+}
+
+.required-title-type, .filter-btn-type{
+	display: flex !important;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+	margin: 0;
+	padding: 0 5px;
+}
+
+.handle-btn-type {
+	margin: 0 2.5px;
+}
+
+.filter-type {
+	display: flex !important;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+	margin: 0;
+	flex: 0 0 50%;
+    max-width: 50%;
+	padding: 0 20px;
+}
+
+.handle-type {
+	display: flex !important;
+    flex-wrap: wrap;
+    justify-content: right;
+    align-items: center;
+	margin: 0;
+	flex: 0 0 50%;
+    max-width: 50%;
+	padding: 0 20px;
+}
+
+.type-selector {
+	border-radius: 10px;
+}
+
+.info-label {
+	position: relative;
+	background-color: #ffffff;
+	color: #345386;
+	border-radius: 10px;
+	top:10px;
+	left: 10px;
+	width: auto;
+	font-size: 14px;
+}
+
+.show-list {
+	width: 100%;
+}
+
+.handle-and-return {
+	padding-bottom: 5px;
+}
+
+.odd {
+	background-color: #f2f2f2;
+}
+
+.even {
+	background-color: #d9d9d9;
+}
+
+/* 新增系所 - 橘色背景 */
+.action-new {
+    background-color: rgb(211, 255, 186) !important;
+}
+
+/* 更改系名 - 紫色背景 */
+.action-rename {
+    background-color: rgb(255, 138, 210) !important;
+}
+
+/* 更換類組 - 黃色背景 */
+.action-change-group {
+    background-color: rgb(255, 255, 144) !important;
+}
+
+/* 合併系所 - 灰色背景 */
+.action-merge {
+    background-color: rgb(158, 232, 255) !important;
+}
+
+.action-type {
+	border-radius: 30px 0 !important;
+	text-align: center;
+	text-indent: 0 !important;
+	color: black;
+	display: inline-block;
+    width: 110px;
+	min-width: 110px;
+    margin: 0 10px;
+}
+
+#list-element {
+	margin: 5px;
+	display: inline-table;
+}
+
+.report-title {
+	display: flex;
+    align-items: center;
+    white-space: nowrap;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#report-list {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 5px;
+}
+
+.img-thumbnail {
+	border: none;
+	cursor: pointer;
+	z-index: 20;
+}
+
+.btn {
+	margin-top: 2px;
+}
+
+.hr-type {
+	margin: 0.5rem;
+}
+
+#fixed-top {
+	padding: 5px 0px;
+	position:sticky;
+	z-index: 10;
+	background-color: rgba(253, 253, 253, 0.85);
+	top:2px;
+}
+
+.info-label {
+	font-weight: bold;
+}
+
+span.info-label {
+	display: contents;
+}
+
+.info-button {
+	margin: 5px;
+	width: 150px;
+	max-width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-left: auto;
+}
+
+.nav-pills .nav-link.btn-outline-warning {
+    background: transparent; /* 或 initial */
+    border: 1px solid #ffc107;
+    color: #ffc107;
+}
+
+.nav-pills .nav-link.btn-outline-success {
+    background: transparent; /* 或 initial */
+    border: 1px solid #28a745;
+    color: #28a745;
+}
+
+.nav-pills .nav-link.btn-outline-primary {
+    background: transparent; /* 或 initial */
+    border: 1px solid #007bff;
+    color: #007bff;
+}
+
+.nav-pills .nav-link.btn-outline-danger {
+    background: transparent; /* 或 initial */
+    border: 1px solid #dc3545;
+    color: #dc3545;
+}
+
+@media screen {
+	#report-list {
+		height: 700px;
+	}
+}
+@media screen and (min-width:481px) and (max-width:768px) {
+	#report-list {
+		height: 500px;
+	}
+	.filter-type {
+		flex: 0 0 100%;
+        max-width: 100%;
+	    padding: 0 20px;
+    }
+	.handle-type {
+        flex: 0 0 100%;
+        max-width: 100%;
+	    padding: 0 20px;
+    }
+}
+@media screen and (max-width:480px) {
+	#report-list {
+		height: 400px;
+	}
+	.filter-type {
+		flex: 0 0 100%;
+        max-width: 100%;
+	    padding: 0 20px;
+    }
+	.handle-type {
+        flex: 0 0 100%;
+        max-width: 100%;
+	    padding: 0 20px;
+    }
+}
+
+
+
