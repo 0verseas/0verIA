@@ -35,6 +35,7 @@
     let reportId = '';
     let _filterStudentList = [];
     let reportListArray = []; // 目前請求有哪些
+    let enrollmentListArray = []; // 目前單招錄取資料有哪些
     let studentAllList = []; // 目前學生列表有哪些
     let currentStudentDataID = 0; // 當前學生ID
 
