@@ -1,43 +1,45 @@
-var schoolData = (function () {
+(()=>{
 
 	/**
 	 * cache DOM
 	 */
 
 	// 學校資料
-	var $schoolInfoForm = $('#form-schoolData');
-	var $schoolId = $schoolInfoForm.find('#schoolId');
-	var $title = $schoolInfoForm.find('#title');
-	var $engTitle = $schoolInfoForm.find('#engTitle');
-	// 單獨招收僑生（自招）
-	var $hasTestSelfEnrollment = $schoolInfoForm.find('#hasTestSelfEnrollment');
-	var $approvalNoOfSelfEnrollment = $schoolInfoForm.find('#approvalNoOfSelfEnrollment');
-	var $approvalDocOfSelfEnrollment = $schoolInfoForm.find('#uploadedApprovalDocOfSelfEnrollmentArea');
-	var $approvalDocOfSelfEnrollmentUrl = $schoolInfoForm.find('#approvalDocOfSelfEnrollmentUrl');
-	var $approvalNoOfTestSelfEnrollment = $schoolInfoForm.find('#approvalNoOfTestSelfEnrollment');
-	var $approvalDocOfTestSelfEnrollment = $schoolInfoForm.find('#uploadedApprovalDocOfTestSelfEnrollmentArea');
-	var $approvalDocOfTestSelfEnrollmentUrl = $schoolInfoForm.find('#approvalDocOfTestSelfEnrollmentUrl');
+	const $schoolInfoForm = $('#form-schoolData');
+	const $schoolId = $schoolInfoForm.find('#schoolId');
+	const $title = $schoolInfoForm.find('#title');
+	const $engTitle = $schoolInfoForm.find('#engTitle');
+	// 單獨招收僑生（單招）
+	const $hasTestSelfEnrollment = $schoolInfoForm.find('#hasTestSelfEnrollment');
+    const $testSelfEnrollmentArea = $('#testSelfEnrollmentContent'); // 您需要包裹一個容器 ID
+	const $approvalNoOfSelfEnrollment = $schoolInfoForm.find('#approvalNoOfSelfEnrollment');
+	const $approvalDocOfSelfEnrollment = $schoolInfoForm.find('#uploadedApprovalDocOfSelfEnrollmentArea');
+	const $approvalDocOfSelfEnrollmentUrl = $schoolInfoForm.find('#approvalDocOfSelfEnrollmentUrl');
+	const $approvalNoOfTestSelfEnrollment = $schoolInfoForm.find('#approvalNoOfTestSelfEnrollment');
+	const $approvalDocOfTestSelfEnrollment = $schoolInfoForm.find('#uploadedApprovalDocOfTestSelfEnrollmentArea');
+	const $approvalDocOfTestSelfEnrollmentUrl = $schoolInfoForm.find('#approvalDocOfTestSelfEnrollmentUrl');
 
 	// Button
-	var $saveschoolDataBtn = $schoolInfoForm.find('#btn-save');
-	var $lockschoolDataBtn = $schoolInfoForm.find('#btn-lock-school');
+	const $saveSchoolDataBtn = $schoolInfoForm.find('#btn-save');
+	const $lockschoolDataBtn = $schoolInfoForm.find('#btn-lock-school');
 	const $uploadApprovalDocOfSelfEnrollmentBtn = $('#approval-doc-of-self-enrollment-upload');
     const $uploadApprovalDocOfTestSelfEnrollmentBtn = $('#approval-doc-of-test-self-enrollment-upload');
+    const $deleteSchoolDataFileBtn = $('#delete-school-data-file-btn'); // 刪除檔案按鈕
 	const $imgModal = $('#img-modal'); // 顯示檔案模板
 	const $uploadApprovalDocOfSelfEnrollmentArea = $('#uploadApprovalDocOfSelfEnrollmentArea'); // 上傳教育部資格審查公文檔案欄位
     const $uploadApprovalDocOfTestSelfEnrollmentArea = $('#uploadApprovalDocOfTestSelfEnrollmentArea'); // 上傳僑委會資格審查公文檔案欄位
 	const $uploadedApprovalDocOfSelfEnrollmentArea = document.getElementById('uploadedApprovalDocOfSelfEnrollmentArea'); // 擺放已上傳教育部資格審查公文檔案欄位
     const $uploadedApprovalDocOfTestSelfEnrollmentArea = document.getElementById('uploadedApprovalDocOfTestSelfEnrollmentArea'); // 擺放已上傳僑委會資格審查公文檔案欄位
 	const $imgModalBody= $('#img-modal-body'); // 顯示檔案的欄位
-
-	let $uploadedSchoolDataFiles = ""; // 學校上傳檔案陣列
-
-	var text = '';  // 檢查各學制是否存在
-	// form-group
-	var formGroup = {
+    // form-group
+	const formGroup = {
 		approvalNoOfSelfEnrollmentForm: $schoolInfoForm.find('#approvalNoOfSelfEnrollmentForm input'),
 		approvalNoOfTestSelfEnrollmentForm: $schoolInfoForm.find('#approvalNoOfTestSelfEnrollmentForm input'),
 	};
+
+	let uploadedSchoolDataFiles = ""; // 學校上傳檔案陣列
+    let currentSchoolDataID = ""; // 當前學校資料ID
+	let text = '';  // 檢查各學制是否存在
 
 	class schoolDataList{
         constructor({
@@ -79,60 +81,52 @@ var schoolData = (function () {
 	 * bind event
 	 */
 
-	$hasTestSelfEnrollment.on("change", _switchSelfEnrollmentStatus);
-	$saveschoolDataBtn.on("click", false, _handelSchoolDataSave);
+	$hasTestSelfEnrollment.on("change", _switchTestSelfEnrollmentStatus);
+    $uploadApprovalDocOfSelfEnrollmentBtn.on('change', _handleSchoolDataUploadFile);
+    $uploadApprovalDocOfTestSelfEnrollmentBtn.on('change', _handleSchoolDataUploadFile);
+    $deleteSchoolDataFileBtn.on('click', _handleSchoolDataDeleteFile); // 刪除單招錄取資料檔案
+	$saveSchoolDataBtn.on("click", false, _handelSchoolDataSave);
 	// $lockschoolDataBtn.on("click", _lockschool);
+    $('body').on('click', '.img-thumbnail', _handleSchoolDataShowFile); // 顯示單招錄取資料檔案
 
-	function _switchSelfEnrollmentStatus() { // 切換「單獨招收僑生（自招）」狀態
-		// $approvalNoOfSelfEnrollment.prop('disabled', !$hasTestSelfEnrollment.prop('checked'));
-		// $approvalDocOfSelfEnrollment.prop('disabled', !$hasTestSelfEnrollment.prop('checked'));
-		$approvalNoOfTestSelfEnrollment.prop('disabled', !$hasTestSelfEnrollment.prop('checked'));
-		$approvalDocOfTestSelfEnrollment.prop('disabled', !$hasTestSelfEnrollment.prop('checked'));
+	function _switchTestSelfEnrollmentStatus() { // 切換「單獨招收僑生（單招）」狀態
+        // 修改為：切換整個區塊的「顯示/隱藏」
+        if ($hasTestSelfEnrollment.prop('checked')) {
+            $testSelfEnrollmentArea.slideDown(); // 展開顯示
+            _handleSchoolDataRenderFile();
+        } else {
+            $testSelfEnrollmentArea.slideUp();   // 縮回隱藏
+            $uploadedApprovalDocOfTestSelfEnrollmentArea.innerHTML = '';
+        }
 	}
 
 	// 整理 form 資料
 	function _getFormData() {
 
-		var data = new FormData();
+		let data = new FormData();
 
-		// data.append('has_test_self_enrollment', +$hasTestSelfEnrollment.prop('checked'));
-		data.append('approval_no_of_self_enrollment', $approvalNoOfSelfEnrollment.val());
-		// data.append('approval_doc_of_self_enrollment', $approvalDocOfSelfEnrollment.prop('files')[0]);
-		data.append('approval_no_of_test_self_enrollment', $approvalNoOfTestSelfEnrollment.val());
-		// data.append('approval_doc_of_test_self_enrollment', $approvalDocOfTestSelfEnrollment.prop('files')[0]);
+        // 永遠傳送：一般單招文號
+        data.append('approval_no_of_self_enrollment', $('#approvalNoOfSelfEnrollment').val());
+        data.append('has_test_self_enrollment', +$hasTestSelfEnrollment.prop('checked'));
 
-		// if ($hasTestSelfEnrollment.prop('checked')) {
-			// data.append('approval_no_of_test_self_enrollment', $approvalNoOfTestSelfEnrollment.val());
-			// data.append('approval_doc_of_test_self_enrollment', $approvalDocOfTestSelfEnrollment.prop('files')[0]);
-		// }
+        // 條件式傳送：只有在勾選 (isChecked === 1) 時，才附加試辦專案資料
+        if ($hasTestSelfEnrollment.prop('checked')) {
+            data.append('approval_no_of_test_self_enrollment', $('#approvalNoOfTestSelfEnrollment').val());
+        }
 
-		console.log(data);
 		return data;
 	}
 
 	// 檢查表單要求
 	function _validateForm() {
-		var check = true;
-		if (!_validateNotEmpty($approvalNoOfSelfEnrollment)) {formGroup.approvalNoOfSelfEnrollmentForm.addClass("is-invalid"); check = false}
-		if ($hasTestSelfEnrollment.prop("checked")) {
+        let check = true;
+        if (!_validateNotEmpty($approvalNoOfSelfEnrollment)) {formGroup.approvalNoOfSelfEnrollmentForm.addClass("is-invalid"); check = false}
+
+        if ($hasTestSelfEnrollment.prop("checked")) {
 			if (!_validateNotEmpty($approvalNoOfTestSelfEnrollment)) {formGroup.approvalNoOfTestSelfEnrollmentForm.addClass("is-invalid"); check = false}
 		}
 
-		return check;
-	}
-
-	// 檢查有輸入的 Url 格式
-	function _validateUrl() {
-		var check = true;
-
-		if (_validateNotEmpty($url)) {
-			if (!_validateUrlFormat($url)) {formGroup.urlForm.addClass("is-invalid"); check = false}
-		}
-		if (_validateNotEmpty($engUrl)) {
-			if (!_validateUrlFormat($engUrl)) {formGroup.engUrlForm.addClass("is-invalid"); check = false}
-		}
-
-		return check;
+        return check;
 	}
 
 	// 檢查 form 是否為有值
@@ -140,36 +134,30 @@ var schoolData = (function () {
 		return el.val() !== "";
 	}
 
-	// 檢查 Url 格式是否正確
-	function _validateUrlFormat(el) {
-		var regexp = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-		return regexp.test(el.val());
-	}
-
 	// 送出表單
 	function _handelSchoolDataSave() {
-		var form;
+		let form;
 		// init highlight
 		for(form in formGroup) {
 			formGroup[form].removeClass("is-invalid");
 		}
 
-		// var urlResult = _validateUrl();
-		var formResult = _validateForm();
+		let formResult = _validateForm();
 
 		if (!formResult) {
 			swal({title:"有欄位輸入錯誤，請重新確認。", confirmButtonText:'確定', type:'error'});
 			return;
 		}
 
-		var sendData = _getFormData();
+		let sendData = _getFormData();
 		sendData.append('confirmed', '0');
 
 		// window.API._setLoading();
 		sendData.forEach(function(value, key) {
 			console.log(key, value);
-		  });
+		});
 
+        openLoading();
 		School.saveSchoolData(sendData).then(function(res) {
             if(res.ok) {
                 return res.json();
@@ -180,27 +168,27 @@ var schoolData = (function () {
 			swal({title:"儲存成功", confirmButtonText:'確定', type:'success'}).then(() => {
 				location.reload();
 			});
+            stopLoading();
 		}).catch((err) => {
             err.json && err.json().then((data) => {
                 swal({title:data.messages[0], confirmButtonText:'確定', type:'warning'}).then(() => {
-			    	location.reload();
+			    	// location.reload();
 			    });
             });
-            // stopLoading();
+            stopLoading();
         });
-		// Loading.stop();
 	}
+
 	// 鎖定表單
 	async function _lockschool() {
-		// var isAllSet = _confirmExec("提醒您：確認後就無法再更改「學校資料」");
 		if (await _confirmExec("提醒您：<br \>確認後就無法再更改「學校資料」")) {
 			// init highlight
-			var form;
+			let form;
 			for (form in formGroup) {
 				formGroup[form].removeClass("is-invalid");
 			}
 
-			var formResult = _validateForm();
+			let formResult = _validateForm();
 
 			if (!formResult) {
 				swal({title:"有欄位輸入錯誤，請重新確認。", confirmButtonText:'確定', type:'error'}).then(() => {
@@ -208,10 +196,10 @@ var schoolData = (function () {
 				});
 			}
 
-			var sendData = _getFormData();
+			let sendData = _getFormData();
 			sendData.append('confirmed', '1');
-			// openLoading();
 
+			openLoading();
 			School.setSchoolInfo(sendData).then(function(res) {
                 if(res.ok) {
                     return res.json();
@@ -223,30 +211,20 @@ var schoolData = (function () {
 					location.reload();
 				});
 
-				Loading.stop();
+				stopLoading();
 			});
 		}
 	}
 
 	// 擺放學校資料
 	function _setSchoolData(schoolData) {
-		$schoolId.val(schoolData.id);
+        currentSchoolDataID = schoolData.id;
 		$title.val(schoolData.title);
 		$engTitle.val(schoolData.eng_title);
-		// 單獨招收僑生（自招）
+		// 單獨招收僑生（單招）
 		$hasTestSelfEnrollment.prop("checked", schoolData.has_test_self_enrollment);
 		$approvalNoOfSelfEnrollment.val(schoolData.approval_no_of_self_enrollment);
 		$approvalNoOfTestSelfEnrollment.val(schoolData.approval_no_of_test_self_enrollment);
-		// if (schoolData.approval_doc_of_self_enrollment) { // 單招核定公文電子檔
-		// 	var SEDocTitle = schoolData['approval_doc_of_self_enrollment'].substring(schoolData['approval_doc_of_self_enrollment'].lastIndexOf("/") + 1);
-        //     $approvalDocOfSelfEnrollmentUrl.prop("href", env.baseUrl + "/storage/" + schoolData.approval_doc_of_self_enrollment);
-		// 	$approvalDocOfSelfEnrollmentUrl.text(SEDocTitle);
-		// }
-		// if (schoolData.approval_doc_of_test_self_enrollment) { // 試辦來臺入（轉）學專案單獨招生核定公文電子檔
-		// 	var TSEDocTitle = schoolData['approval_doc_of_test_self_enrollment'].substring(schoolData['approval_doc_of_test_self_enrollment'].lastIndexOf("/") + 1);
-        //     $approvalDocOfTestSelfEnrollmentUrl.prop("href", env.baseUrl + "/storage/" + schoolData.approval_doc_of_test_self_enrollment);
-		// 	$approvalDocOfTestSelfEnrollmentUrl.text(TSEDocTitle);
-		// }
 	}
 
 	// init
@@ -264,8 +242,11 @@ var schoolData = (function () {
 				document.getElementById("btn-save").disabled = true;
 				// $('#btn-lock-school').removeClass('btn-danger').addClass('btn-success').prop('disabled', true).text('已鎖定')
 			}
-			return json.info_status;
-		});
+            $uploadedSchoolDataFiles = json.files;
+		}).then((json) => {
+            _handleSchoolDataRenderFile();
+            _switchTestSelfEnrollmentStatus()
+        });;
 	}
 
 	async function _confirmExec(msg) {
@@ -291,10 +272,7 @@ var schoolData = (function () {
 	// 處理單招錄取上傳檔案
     function _handleSchoolDataUploadFile(event) {
         // 可以一次上傳多個檔案 所以先取得遇上傳檔案清單
-        // console.log('是不是學生檔案:' + event.data);
-
-        currentFileID = $(this).data('id'); // 獲取 data-userid
-        currentReportId = $(this).closest('tr').data('id'); // 獲取 data-id
+        currentFileID = $(this).data('id'); // 獲取 data-id
 
         const fileList = this.files;
         // 沒有上傳檔案 直接return
@@ -304,15 +282,18 @@ var schoolData = (function () {
         // 將檔案放到 FormData class中 方便後續request傳送檔案
 		let sendData = new FormData();
 
-        // for (let i = 0; i < fileList.length; i++) {
+        for (let i = 0; i < fileList.length; i++) {
             // 偵測是否超過8MB
-            // if(sizeConversion(fileList[i].size,8)){
-                // swal({title:`${fileList[i].name}檔案過大，檔案大小不能超過8MB`, confirmButtonText:'確定', type:'error'}).then(() => {
-                    // return;
-                // });
-            // }
-            // sendData.append('files[]', fileList[i]);
-        // }
+            if(sizeConversion(fileList[i].size,8)){
+                swal({title:`${fileList[i].name}檔案過大，檔案大小不能超過8MB`, confirmButtonText:'確定', type:'error'}).then(() => {
+                    return;
+                });
+            }
+            sendData.append('files[]', fileList[i]);
+        }
+
+        openLoading();
+        // 上傳檔案
         School.uploadSchoolDataFile(currentSchoolDataID, currentFileID, sendData)
         .then((res) => {
             if(res.ok) {
@@ -322,7 +303,6 @@ var schoolData = (function () {
             }
         })
         .then((json) => {
-            // console.log(json);
             $uploadedSchoolDataFiles = json;
         })
         .then(()=>{
@@ -348,10 +328,7 @@ var schoolData = (function () {
 
     // 處理單招錄取檔案渲染
     function _handleSchoolDataRenderFile() {
-        // currentStudentDataID = $userId.val();
-        // console.log($currentEnrollmentDataID);
-
-        // 三個區塊各自的 HTML 累積字串
+        // 兩個區塊各自的 HTML 累積字串
         let uploadedApprovalDocOfSelfEnrollmentAreaHtml = '';
         let uploadedApprovalDocOfTEstSelfEnrollmentAreaHtml = '';
 
@@ -446,8 +423,6 @@ var schoolData = (function () {
 
     // 處理檔案刪除
     function _handleSchoolDataDeleteFile() {
-        // currentEnrollmentDataID = $userId.val();
-        // console.log(currentEnrollmentDataID);
         let fileName = $deleteSchoolDataFileBtn.attr('filename');
         swal({
 			title: '確定要刪除此檔案？',
@@ -492,6 +467,13 @@ var schoolData = (function () {
             }
         });
     }
+
+    // 計算檔案大小是否超過限制大小
+	function sizeConversion(size,limit) {
+		let maxSize = limit*1024*1024;
+
+		return size >=maxSize;
+	}
 
 	// 副檔名與檔案型態對應（回傳值須符合 font-awesome 規範）
 	function _getFileType(fileNameExtension = '') {

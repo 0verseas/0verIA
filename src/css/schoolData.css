@@ -1,3 +1,82 @@
 #reviewInfo {
 	display: none;
 }
+
+.img-thumbnail {
+max-width: 200px;
+max-height: 200px;
+margin: 2px;
+}
+
+/* 非圖片檔案用 icon 當縮圖 */
+.non-img-file-thumbnail {
+width: 140px;
+height: 158px;
+display: inline-block;
+text-align: center;
+vertical-align: middle;
+}
+
+.non-img-file-thumbnail > i {
+display: block;
+font-size: 9rem;
+}
+
+.non-img-file-ori {
+font-size: 10rem;
+}
+
+.non-img-file-download {
+/* 有點空間，比較好看 */
+margin-top: 1rem;
+}
+
+.nav-tabs .nav-link {
+  color: #495057; /* 默認文字顏色 */
+  background-color: #f8f9fa; /* 默認背景顏色 */
+  border: 1px solid #dee2e6; /* 默認邊框 */
+  border-bottom: none; /* 避免和內容區域的邊框重疊 */
+}
+
+/* 選中的分頁樣式 */
+.nav-tabs .nav-link.active {
+  color: #fff; /* 選中分頁的文字顏色 */
+  background-color: #007bff; /* 選中分頁的背景顏色 */
+  border-color: #007bff #007bff #fff; /* 選中分頁的邊框顏色 */
+  border-bottom: none; /* 確保選中分頁的底部沒有邊框 */
+}
+
+/* 邊框修復：讓內容區域的邊框連續 */
+.tab-content {
+  border: 1px solid #dee2e6; /* 內容區域的邊框 */
+  border-top: none; /* 避免與選中分頁的邊框重疊 */
+  padding: 1rem; /* 內容區域的內邊距 */
+}
+
+option:hover {
+    background-color: #007bff; /* 藍色背景 */
+    color: #fff; /* 白色文字 */
+}
+
+  /* 修改 active 狀態 (當 focus 時) */
+option:checked {
+    background-color: #007bff; /* 綠色背景 */
+    color: #fff; /* 白色文字 */
+    border-color: #007bff; /* 綠色邊框 */
+    outline: none; /* 移除默認的藍色外框 */
+}
+
+/* .form-group { */
+	/* padding-left: 2.5px; */
+	/* padding-right: 2.5px; */
+/* } */
+
+.same-width-button {
+    min-width: 175px; /* 或你想要統一的寬度 */
+    display: inline-block;
+    text-align: center;
+}
+
+.swal2-container {
+    z-index: 99999 !important;
+}

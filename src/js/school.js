@@ -23,6 +23,24 @@ var School = (function () {
 		});
 	}
 
+	function uploadSchoolDataFile(schoolId,fileId,data){
+		return fetch(baseUrl + `/independent-admission/schools/file/${schoolId}/${fileId}`, {
+			method: 'POST',
+			body: data,
+			credentials: 'include'
+		});
+	}
+
+	function deleteSchoolDataFile(schoolId,fileName){
+		return fetch(baseUrl + `/independent-admission/schools/file/${schoolId}/${fileName}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			credentials: 'include'
+		});
+	}
+
     function getIndependentAdmissionReportList(){
 		return fetch(baseUrl + `/independent-admission/report`, {
 			method: 'GET',
@@ -324,40 +342,36 @@ var School = (function () {
     }
 
     return {
-        getSchoolData,
-        saveSchoolData,
-		// uploadSchoolDataFile,
-		// deleteSchoolDataFile,
-        getIndependentAdmissionReportList,
-		getIndependentAdmissionReportData,
-		saveIndependentAdmissionReportData,
-		deleteIndependentAdmissionReportData,
-		uploadIndependentAdmissionReportFile,
-		deleteIndependentAdmissionReportFile,
+        getSchoolData, // 取得學校資料
+        saveSchoolData, // 儲存學校資料
+		uploadSchoolDataFile, // 上傳學校資料檔案
+		deleteSchoolDataFile, // 刪除學校資料檔案
+        getIndependentAdmissionReportList, //取得單招通報清冊
+		getIndependentAdmissionReportData, // 取得單招通報資料
+		saveIndependentAdmissionReportData, // 儲存單招通報資料
+		deleteIndependentAdmissionReportData, // 刪除單招通報資料
+		uploadIndependentAdmissionReportFile, // 上傳單招通報資料檔案
+		deleteIndependentAdmissionReportFile, // 刪除單招通報資料檔案
 
 		getIndependentAdmissionStudentList, // 取得學生清冊
-		getIndependentAdmissionStudentData,
-		saveIndependentAdmissionStudentData,
-		uploadStudentDataFile,
-		deleteStudentDataFile,
+		getIndependentAdmissionStudentData, // 取得學生資料
+		saveIndependentAdmissionStudentData, //儲存學生資料
+		uploadStudentDataFile, // 上傳學生資料檔案
+		deleteStudentDataFile, // 刪除學生資料檔案
 
-		getIndependentAdmissionEnrollmentList,
-		getIndependentAdmissionEnrollmentData,
+		getIndependentAdmissionEnrollmentList, // 取得單招錄取清冊
+		getIndependentAdmissionEnrollmentData, // 取得單招錄取資料
 		// getIndependentAdmissionEnrollmentInfo,
-		saveIndependentAdmissionEnrollmentData,
-		saveIndependentAdmissionEnrollmentStudentData,
-		deleteIndependentAdmissionEnrollmentData,
-		uploadEnollmentDataFile,
-		deleteEnrollmentDataFile,
+		saveIndependentAdmissionEnrollmentData, // 儲存單招錄取資料
+		saveIndependentAdmissionEnrollmentStudentData, //儲存單招錄取學生資料
+		deleteIndependentAdmissionEnrollmentData, // 刪除單招錄取資料
+		uploadEnollmentDataFile, // 上傳單招錄取檔案
+		deleteEnrollmentDataFile, // 刪除單招錄取檔案
 
 		getIndependentAdmissionEnrollmentStudentList, // 取得已錄取的學生清冊
 		saveIndependentAdmissionEnrollmentStudentRegistrationData, // 儲存已錄取的學生報到狀態
 
-		// uploadIndependentAdmissionEnrollmentFile,
-		// deleteIndependentAdmissionEnrollmentFile,
-
-		getSchooIndependentAdmissionReportList,
-        getSchooApplyList,
+		getSchooIndependentAdmissionReportList, // 取得學校單招通報清冊 = 取得單招通報清冊？
         completeApply,
         executeApply,
         updateApply,

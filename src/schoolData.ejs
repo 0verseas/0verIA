@@ -8,61 +8,7 @@
 			<label for="">學校英文名稱</label>
 			<input id="engTitle" type="text" class="form-control" disabled>
 		</div>
-		<!-- <div class="form-group col-6">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<div class="input-group-text">
-						<input id="hasTestSelfEnrollment" type="checkbox"/>
-					</div>
-				</div>
-				<input type="text" class="form-control" value="貴校是否經教育部核定可辦理單招*（如「有」請勾選，「無」則免勾）" disabled>
-			</div>
-		</div> -->
 	</div>
-	<!-- <div class="row">
-		<div class="form-group col-12">
-			<label for="">單招核定公文電子檔</label>
-			<div class="row btn-upload" style="margin-bottom: 15px;">
-				<div class="col-12">
-					<input type="file" class="filestyle approvalNoOfTestSelfEnrollment" id="approvalNoOfTestSelfEnrollment"
-					data-btnClass="btn-success"
-					data-input="false"
-					data-text=" 選取檔案"
-					data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
-					multiple>
-				</div>
-			</div>
-			<input id="approvalDocOfSelfEnrollment" type="file" class="form-control">
-		</div>
-	</div>
-	<div class="row">
-		<div class="form-group col-12">
-			已上傳檔案：<a id="approvalDocOfSelfEnrollmentUrl" href=""></a>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="form-group col-12">
-			<label for="">試辦來臺入（轉）學專案單獨招生核定公文電子檔</label>
-			<div class="row btn-upload" style="margin-bottom: 15px;">
-				<div class="col-12">
-					<input type="file" class="filestyle approvalDocOfTestSelfEnrollment" id="approvalDocOfTestSelfEnrollment"
-					data-btnClass="btn-success"
-					data-input="false"
-					data-text=" 選取檔案"
-					data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
-					multiple>
-				</div>
-			</div>
-			<input id="approvalDocOfTestSelfEnrollment" type="file" class="form-control">
-		</div>
-	</div>
-	<div class="row">
-		<div class="form-group col-12">
-			已上傳檔案：<a id="approvalDocOfTestSelfEnrollmentUrl" href=""></a>
-		</div>
-	</div> -->
-
 
 	<div class="card" id="uploadApprovalDocOfSelfEnrollmentArea">
 		<div class="card-header bg-primary text-white">
@@ -81,12 +27,14 @@
 
 			<div class="row btn-upload" style="margin-bottom: 15px;">
 				<div class="col-12">
-					<input type="file" class="filestyle approval-doc-of-self-enrollment-upload" id="approval-doc-of-self-enrollment-upload"
-					data-btnClass="btn-success"
-					data-input="false"
-					data-text=" 選取檔案"
-					data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
-					multiple>
+					<input type="file" class="filestyle approval-doc-of-self-enrollment-upload"
+						id="approval-doc-of-self-enrollment-upload"
+						data-id="approval-doc-of-self-enrollment-file"
+						data-btnClass="btn-success"
+						data-input="false"
+						data-text=" 選取檔案"
+						data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
+						multiple>
 				</div>
 			</div>
 
@@ -104,36 +52,49 @@
 			上傳試辦來臺入（轉）學專案單獨招生核定公文電子檔
 		</div>
 		<div class="card-body">
-			<div class="row">
-				<div id="approvalNoOfTestSelfEnrollmentForm" class="form-group col-12">
-					<label class="form-control-label" for="">試辦來臺入（轉）學專案單獨招生核定文號</label>
-					<input maxlength="191" id="approvalNoOfTestSelfEnrollment" type="text" class="form-control">
-				</div>
-			</div>
-			<!-- <div class="alert alert-warning">
-				可接受副檔名為 <strong class="text-danger">pdf、jpg、png</strong> 的檔案，單一個檔案大小需 <strong class="text-danger">小於 4 Mbytes</strong> 。
-			</div> -->
-
-			<div class="row btn-upload" style="margin-bottom: 15px;">
+			<!-- 新增勾選框區塊 -->
+			<div class="row mb-3">
 				<div class="col-12">
-					<input type="file" class="filestyle approval-doc-of-test-self-enrollment-upload" id="approval-doc-of-test-self-enrollment-upload"
-					data-btnClass="btn-success"
-					data-input="false"
-					data-text=" 選取檔案"
-					data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
-					multiple>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input" id="hasTestSelfEnrollment">
+						<label class="custom-control-label" for="hasTestSelfEnrollment">
+							貴校是否經教育部核定可辦理此專案單招（如有請勾選，無則免勾）
+						</label>
+					</div>
 				</div>
 			</div>
 
-			<div class="card">
-				<div class="card-body">
-					<h4 class="card-title"><span>已上傳檔案</span> <small class="text-muted">(點圖可放大或刪除)</small></h4>
-					<div id="uploadedApprovalDocOfTestSelfEnrollmentArea">
+			<!-- 使用容器包裹需要連動顯示/隱藏的內容，預設隱藏 (style="display:none") -->
+			<div id="testSelfEnrollmentContent" style="display:none;">
+				<div class="row">
+					<div id="approvalNoOfTestSelfEnrollmentForm" class="form-group col-12">
+						<label class="form-control-label" for="">試辦來臺入（轉）學專案單獨招生核定文號</label>
+						<input maxlength="191" id="approvalNoOfTestSelfEnrollment" type="text" class="form-control">
+					</div>
+				</div>
+
+				<div class="row btn-upload" style="margin-bottom: 15px;">
+					<div class="col-12">
+						<input type="file" class="filestyle approval-doc-of-test-self-enrollment-upload"
+							id="approval-doc-of-test-self-enrollment-upload"
+							data-id="approval-doc-of-test-self-enrollment-file"
+							data-btnClass="btn-success"
+							data-input="false"
+							data-text=" 選取檔案"
+							data-Icon="<i class='fa fa-folder-open' aria-hidden='true'/>"
+							multiple>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title"><span>已上傳檔案</span> <small class="text-muted">(點圖可放大或刪除)</small></h4>
+						<div id="uploadedApprovalDocOfTestSelfEnrollmentArea"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-    </div>
+	</div>
 	<div class="modal fade img-modal" tabindex="-1" role="dialog" aria-labelledby="imgModal" aria-hidden="true" id="img-modal">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -142,7 +103,7 @@
 				</div>
 				<div class="modal-footer">
 	                <!-- <button type="button" class="btn btn-danger delete-action"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button> -->
-					<button type="button" class="btn btn-danger delete-file"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button>
+					<button type="button" class="btn btn-danger" id="delete-school-data-file-btn"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button>
 	                <!-- <button type="button" class="btn btn-danger delete-student-data-file"><i class="fa fa-trash" aria-hidden="true"></i> 刪除</button> -->
 					<button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-sign-out" aria-hidden="true"></i> 離開</button>
 				</div>
@@ -156,11 +117,6 @@
 				儲存
 			</button>
 		</div>
-		<!-- <div class="offset-3 col-2 text-center"> -->
-			<!-- <button class="btn btn-danger" id="btn-lock-school"> -->
-				<!-- 鎖定學校資料 -->
-			<!-- </button> -->
-		<!-- </div> -->
     </div>
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-filestyle/1.3.0/bootstrap-filestyle.min.js"> </script>
